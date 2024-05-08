@@ -1,0 +1,108 @@
+body {
+    background-color: #fafafa;
+    margin: 0;
+}
+h1 {
+    font-family: "Lexend Deca";
+    font-size: 20px;
+}
+hr {
+    border: none;
+    border-bottom: 2px solid #cecece66;
+}
+.card-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+}
+
+/* Estilo para cada cartão */
+.card {
+
+    margin: 10px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden; /* Para evitar que a sombra saia do cartão */
+    padding: 4px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+}
+
+/* Estilo para as imagens dentro dos cartões */
+.card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px 5px 0 0; /* Cantos arredondados apenas na parte superior */
+}
+
+/* Estilo para os detalhes dentro dos cartões */
+.card-details {
+    padding: 20px;
+}
+
+/* Estilo para tornar os cartões responsivos */
+@media (max-width: 768px) {
+    .card {
+        flex: 0 0 calc(50% - 20px); /* Cartões ocupam 1/2 da largura da lista em telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        flex: 0 0 calc(100% - 20px); /* Cartões ocupam toda a largura da lista em telas ainda menores */
+    }
+}
+
+.btn {
+    font-size: 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 8px;
+    background-color: #aaa8a8;
+    color: white;
+}
+.fundo-header {
+    background-color: #000000;
+    margin: 0px;
+    padding: 15px;
+    color: white;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    font-family: "Lexend Deca";
+    font-size: 20px;
+}
+
+.altura-fix {
+    height: 77px;
+}
+
+.wrapper {
+    display: block;
+    margin: 0 auto;
+    max-width: 1920px;
+    width: 96%;
+    box-sizing: border-box;
+}
+
+.section-header {
+    padding: 10px 0;
+    border-bottom: 1px solid #EEE;
+    margin: 10px 0;
+}
+.row {
+    display: flex;
+    align-items: flex-start;
+}
+
+.col-1,
+.col-2 {
+    flex: 1;
+}
+
+.espaco {
+    padding-left: 15px;
+}
