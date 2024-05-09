@@ -20,13 +20,10 @@ class PokemonApiServiceTest extends KernelTestCase
         $httpClientMock->method('request')
             ->willReturn($responseMock);
 
-        self::bootKernel();
-        $container = self::$container;
-
-        $apiService = new PokemonApiService($httpClientMock, 'https://fake.api');
+        $apiService = new PokemonApiService($httpClientMock, 'https://api.pokemontcg.io/v1/cards');
         $cards = $apiService->getPokemonCards();
 
         $this->assertCount(1, $cards);
-        $this->assertEquals('Pikachu', $cards[0]['name']);
+        $this->assertEquals('Pikachu', $cards["cards"][0]['name']);
     }
 }

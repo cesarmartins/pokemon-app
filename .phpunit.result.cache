@@ -1,1 +1,1 @@
-{"version":1,"defects":{"App\\Tests\\Service\\PokemonApiServiceTest::testGetPokemonCards":4},"times":{"App\\Tests\\Service\\PokemonApiServiceTest::testGetPokemonCards":0.012}}
+{"version":1,"defects":{"App\\Tests\\Service\\PokemonApiServiceTest::testGetPokemonCards":4,"App\\Tests\\Controller\\PokemonControllerTest::testIndex":3},"times":{"App\\Tests\\Service\\PokemonApiServiceTest::testGetPokemonCards":0.009,"App\\Tests\\Controller\\PokemonControllerTest::testIndex":1.461}}

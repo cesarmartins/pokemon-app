@@ -23,3 +23,22 @@ Para executar a aplicação, você pode utilizar o servidor web embutido do Symf
 ```bash
 symfony serve
 ```
+
+## Testes
+
+Para executar os testes unitários (PHPUnit) na aplicação:
+
+1. você precisará instalar o PHPUnit, caso ainda não tenha feito isso:
+```bash
+composer require --dev phpunit/phpunit
+```
+2. basta executar o seguinte comando no terminal:
+```bash
+./vendor/bin/phpunit
+```
+Obs. Certifique-se de estar no diretório raiz do seu projeto ao executar este comando.
+
+
+## Autor
+
+* **César Martins** - *GitHub* - [cesarmartins](https://github.com/cesarmartins)
