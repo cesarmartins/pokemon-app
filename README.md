@@ -32,7 +32,15 @@ Para executar os testes unitários (PHPUnit) na aplicação:
 ```bash
 composer require --dev phpunit/phpunit
 ```
-2. basta executar o seguinte comando no terminal:
+2. Copie o arquivo "phpunit.xml.dist" e retire a extenção ".dist"
+```bash
+cp phpunit.xml.dist phpunit.xml
+```
+3. e adicione no arquivo "phpunit.xml" dentro do nó <PHP>
+```bash
+<env name="KERNEL_CLASS" value="App\Kernel" />
+```
+3. basta executar o seguinte comando no terminal:
 ```bash
 ./vendor/bin/phpunit
 ```
