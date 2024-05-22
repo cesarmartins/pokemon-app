@@ -26,5 +26,17 @@ class PokemonController extends AbstractController
             'cards' => $cards,
         ]);
     }
+
+    /**
+     * @Route("/compare", name="compare_cards")
+     */
+    public function compare(): Response
+    {
+        $cards = $this->pokemonApiService->getPokemonCards();
+
+        return $this->render('pokemon/compare.html.twig', [
+            'cards' => $cards
+        ]);
+    }
 }
 

@@ -26,4 +26,27 @@ class PokemonDetailController extends AbstractController
             'card' => $card["card"],
         ]);
     }
+
+    public function comparar($id, $comparacao): Response
+    {
+        $cardInicio = $this->pokemonApiService->getPokemonDetailCards($id);
+        $cardComparacao = $this->pokemonApiService->getPokemonDetailCards($comparacao);
+
+        echo "pokemom $id:" . $primeiro = $cardInicio["card"]["hp"];
+        echo "<br>";
+        echo "pokemom $comparacao:" . $segundo = $cardComparacao["card"]["hp"];
+        //echo "1" . $cardInicio["card"]["hp"];
+        echo "<br>";
+        if($primeiro > $segundo){
+            echo "O $id Vence";
+        }else{
+            echo "O $comparacao Vence";
+        }
+
+        die();
+        /*return $this->render('pokemon/detail.html.twig', [
+            'card' => $card["card"],
+        ]);*/
+    }
+
 }

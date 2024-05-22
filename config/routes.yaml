@@ -11,3 +11,11 @@ homepage:
 pokemon_detail:
     path: /pokemon_detail/{id}
     controller: App\Controller\PokemonDetailController::index
+
+pokemon_comparar:
+    path: /pokemon_comparar/{id}/{comparacao}
+    controller: App\Controller\PokemonDetailController::comparar
+
+compare_cards:
+    path: /compare
+    controller: App\Controller\PokemonController::compare

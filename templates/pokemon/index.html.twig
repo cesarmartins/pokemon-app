@@ -5,6 +5,7 @@
 {% block body %}
     <div class="fundo-header">
         <h1>Lista de Cartas de Pokémon</h1>
+        <p><a class="btn" href="/compare">Compare Cartas</a></p>
     </div>
     <ul class="card-list">
         {% for eachcards in cards %}
@@ -15,6 +16,9 @@
                     <div class="altura-fix">
                         <p><strong>Nome:</strong> {{ card.name }}</p>
                         <p><strong>ID:</strong> {{ card.id }}</p>
+                        {% if card.hp is defined %}
+                            <p><strong>HP:</strong> {{ card.hp }}</p>
+                        {% endif %}
                         {% if card.types is defined %}
                             <p><strong>Tipo(s):</strong> {{ card.types[0] | join(', ') }}</p>
                         {% endif %}
@@ -26,3 +30,6 @@
         {% endfor %}
     </ul>
 {% endblock %}
+
+
+

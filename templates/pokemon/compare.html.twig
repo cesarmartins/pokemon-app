@@ -1,0 +1,214 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comparar Cartas de Pokémon{{ parent() }}{% endblock %}
+
+{% block body %}
+<div class="fundo-header">
+    <h1>Lista de Cartas de Pokémon</h1>
+</div>
+    <div class="teste">
+        <div class="cartas_comparacao_esquerda">
+            <div class="card" id="card1" style="display: none">
+                <h3>Carta 1</h3>
+                <img src="" alt="Carta 1">
+                <p><strong>Nome:</strong> <span id="card1-name"></span></p>
+                <p><strong>ID:</strong> <span id="card1-id"></span></p>
+                <p><strong>HP:</strong> <span id="card1-hp"></span></p>
+                <p><strong>Tipo(s):</strong> <span id="card1-types"></span></p>
+                <p><strong>Resistência(s):</strong> <span id="card1-resistances"></span></p>
+                <p><strong>Fraqueza(s):</strong> <span id="card1-weaknesses"></span></p>
+                <h2>Ataques</h2>
+                <ul id="card1-attacks"></ul>
+                <hr />
+                <p><a class="btn" href="#" id="btn-card1">Trocar carta</a></p>
+            </div>
+        </div>
+        <div class="cartas_comparacao_direita">
+            <div class="card" id="card2" style="display: none">
+                <h3>Carta 2</h3>
+                <img src="" alt="Carta 2">
+                <p><strong>Nome:</strong> <span id="card2-name"></span></p>
+                <p><strong>ID:</strong> <span id="card2-id"></span></p>
+                <p><strong>HP:</strong> <span id="card2-hp"></span></p>
+                <p><strong>Tipo(s):</strong> <span id="card2-types"></span></p>
+                <p><strong>Resistência(s):</strong> <span id="card2-resistances"></span></p>
+                <p><strong>Fraqueza(s):</strong> <span id="card2-weaknesses"></span></p>
+                <h2>Ataques</h2>
+                <ul id="card2-attacks"></ul>
+                <hr />
+                <p><a class="btn" href="#" id="btn-card2">Trocar carta</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grow1 listagem_cartas">
+        {% for eachcards in cards %}
+            {% for card in eachcards %}
+                {% if card.hp is defined %}
+                    <div class="card" data-card="{{ card | json_encode }}">
+                        <img src="{{ card.imageUrl }}" alt="{{ card.name }}">
+                        <p><strong>Nome:</strong> {{ card.name }}</p>
+                        <p><strong>ID:</strong> {{ card.id }}</p>
+                        <p><strong>HP:</strong> {{ card.hp }}</p>
+                        {% if card.types is defined %}
+                            <p><strong>Tipo(s):</strong> {{ card.types[0] | join(', ') }}</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <script>
+    document.querySelectorAll('.listagem_cartas .card').forEach(cardElement => {
+        cardElement.addEventListener('click', () => {
+            const cardData = JSON.parse(cardElement.getAttribute('data-card'));
+            addCardToComparison(cardData);
+        });
+    });
+
+    function addCardToComparison(cardData) {
+        console.log(cardData);
+        const card1Element = document.getElementById('card1');
+        const card2Element = document.getElementById('card2');
+
+        if (!card1Element.getAttribute('data-card')) {
+            updateCardElement(card1Element, cardData);
+            cardToComparison();
+        } else if (!card2Element.getAttribute('data-card')) {
+            updateCardElement(card2Element, cardData);
+            cardToComparison();
+        } else {
+            alert('Só posso comparar duas cartas, troque de uma carta ou as duas.');
+        }
+    }
+
+    function cardToComparison(){
+
+        let card1 = JSON.parse(document.getElementById('card1').getAttribute('data-card')) || 0;
+        let card2 = JSON.parse(document.getElementById('card2').getAttribute('data-card')) || 0;
+
+        if(!card1){
+            return;
+        }
+
+        if(!card2){
+            return;
+        }
+
+        if(parseInt(card1.hp) > parseInt(card2.hp)){
+            $("#card1").addClass('highlight');
+            $("#card2").removeClass('highlight');
+        }else{
+            $("#card2").addClass('highlight');
+            $("#card1").removeClass('highlight');
+        }
+    }
+
+
+    function updateCardElement(cardElement, cardData) {
+        cardElement.setAttribute('data-card', JSON.stringify(cardData));
+        cardElement.querySelector('img').src = cardData.imageUrlHiRes;
+        cardElement.querySelector('#' + cardElement.id + '-name').textContent = cardData.name;
+        cardElement.querySelector('#' + cardElement.id + '-id').textContent = cardData.id;
+        cardElement.querySelector('#' + cardElement.id + '-hp').textContent = cardData.hp;
+        cardElement.querySelector('#' + cardElement.id + '-types').textContent = cardData.types.join(', ');
+        cardElement.querySelector('#' + cardElement.id + '-resistances').textContent = cardData.resistances ? cardData.resistances.map(r => r.type).join(', ') : 'N/A';
+        cardElement.querySelector('#' + cardElement.id + '-weaknesses').textContent = cardData.weaknesses ? cardData.weaknesses.map(w => w.type).join(', ') : 'N/A';
+        //cardElement.show();
+        const attacksList = cardElement.querySelector('#' + cardElement.id + '-attacks');
+        attacksList.innerHTML = '';
+        if (cardData.attacks) {
+            cardData.attacks.forEach(attack => {
+                const li = document.createElement('li');
+                li.textContent = attack.name;
+                attacksList.appendChild(li);
+                $('#' + cardElement.id).show();
+            });
+        }
+
+        $('#btn-card1').on('click', function(e) {
+            e.preventDefault();
+            clearCardData($('#card1'));
+            document.getElementById('card1').removeAttribute('data-card');
+        });
+
+        $('#btn-card2').on('click', function(e) {
+            e.preventDefault();
+            clearCardData($('#card2'));
+            document.getElementById('card2').removeAttribute('data-card');
+        });
+
+        function clearCardData(cardElement) {
+            cardElement.removeData('card');
+            cardElement.find('img').attr('src', '');
+            cardElement.find('span').text('');
+            cardElement.find('ul').empty();
+            cardElement.removeClass('highlight');
+            cardElement.hide();
+        }
+
+    }
+</script>
+<style>
+    .highlight {
+        background: #4CAF50;
+    }
+
+    .layout {
+        width: 100%;
+        display: flex;
+        gap: 16px;
+    }
+    .grow1 {
+        flex-grow: 1;
+    }
+    .cartas_comparacao_esquerda, .cartas_comparacao_direita {
+        float: inline-start;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin: 0px 15px;
+    }
+    .card {
+        width: 100%;
+        max-width: 170px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        padding: 10px;
+        text-align: center;
+    }
+    .listagem_cartas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    .listagem_cartas .card {
+        flex: 1 1 calc(25% - 16px); /* 4 cards per row with 16px gap */
+        box-sizing: border-box;
+    }
+    img{ width: 150px; }
+    @media (max-width: 1200px) {
+        .listagem_cartas .card {
+            flex: 1 1 calc(33.333% - 16px); /* 3 cards per row with 16px gap */
+        }
+    }
+    @media (max-width: 900px) {
+        .listagem_cartas .card {
+            flex: 1 1 calc(50% - 16px); /* 2 cards per row with 16px gap */
+        }
+    }
+    @media (max-width: 600px) {
+        .listagem_cartas .card {
+            flex: 1 1 calc(100% - 16px); /* 1 card per row with 16px gap */
+        }
+    }
+
+</style>
+{% endblock %}
+{% endblock %}
